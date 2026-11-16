@@ -27,7 +27,7 @@ Los archivos `agent/*.md` se copian tal cual: su *frontmatter* declara `descript
 
 ### Agentes nativos que no se incluyen
 
-`explore` y `build` son agentes **nativos de OpenCode**: no tienen archivo en este repositorio y no deben crearse a mano. Se referencian únicamente desde los permisos del orquestador (`explore`) y desde los perfiles (`explore`, `build`). Si tu versión de OpenCode no expone alguno de ellos, el perfil que lo menciona no podrá aplicarse completo.
+`explore` y `build` son agentes **nativos de OpenCode**: no tienen archivo en este repositorio y no deben crearse a mano. Se referencian desde los permisos del orquestador (`explore`) y desde los perfiles (`explore`, `build`); ningún archivo de este repo crea, redefine ni reemplaza agentes nativos. `plan` es además un modo nativo que el prompt del orquestador menciona como disponible para uso directo del usuario: tampoco tiene archivo acá ni asignación en ningún perfil, y este repositorio no lo configura. Si tu versión de OpenCode no expone alguno de estos agentes o modos, el perfil que lo menciona no podrá aplicarse completo.
 
 ## Perfiles de modelos
 
@@ -44,6 +44,7 @@ Notas importantes:
 - **`FAST` y `Full-Codex` omiten `designer`.** No es un error de exportación: esos perfiles no reasignan al diseñador. Si `designer` está instalado, conserva el `model` declarado en su propio *frontmatter*. `Opencode-GO` sí incluye `designer`.
 - Los identificadores de proveedor (`openai`, `opencode-go`, `xai`) deben existir en tu instalación y estar autenticados. Sin credenciales válidas del proveedor, el perfil falla al aplicarse o al invocar al agente.
 - Los nombres de modelo y las variantes son los del momento del export. Si un proveedor retira o renombra un modelo, el perfil queda desactualizado hasta que se edite.
+- **`FAST.json` de este repositorio no es el mismo archivo que el `FAST` de ejemplo de Team-Profiles.** Son orígenes distintos y pueden asignar modelos o variantes diferentes a los mismos agentes. No copies uno sobre el otro sin respaldo y una decisión explícita: sobrescribir descarta la versión previa, y cuál corresponde depende de qué instalación y qué modelos tengas disponibles.
 
 ## Dependencia del selector `/team`
 
@@ -52,6 +53,17 @@ El comando `/team` que aplica estos perfiles **no está incluido aquí**. Vive e
 <https://github.com/Thiago-P05/Team-Profiles>
 
 Sin ese repositorio, los archivos de este repo siguen siendo válidos como definiciones y perfiles, pero no hay selector automático: la aplicación de un perfil sería manual o mediante tu propio mecanismo. Los dos repositorios se instalan por separado y no se copian entre sí.
+
+### Requisitos de activación con Team-Profiles
+
+El selector no crea la configuración que necesita: la espera ya presente. Para que `/team` pueda aplicar un perfil, tu instalación debe cumplir al menos esto:
+
+1. `~/.config/opencode/opencode.jsonc` debe existir y declarar `default_agent` como un **string** con el nombre de un agente existente.
+2. Ese mismo archivo debe declarar bloques de agente para `build` y `explore`, cada uno con `model` como **string**.
+3. Los archivos de agentes requeridos por el catálogo deben existir en `~/.config/opencode/agent/`. El selector aplica perfiles sobre definiciones existentes; no genera ni repara archivos de agente.
+4. El catálogo de perfiles debe estar disponible en la instalación. El contrato exacto y los nombres válidos están en el repositorio del selector (`sdd.js` y su README upstream), que es la fuente de verdad.
+
+Si falta cualquiera de estos requisitos, `/team` no puede aplicar un perfil de forma confiable. Completar esa configuración es responsabilidad de quien instala y queda fuera del alcance de este repositorio: acá solo se documenta la dependencia.
 
 ## Activación y respaldos
 
@@ -93,7 +105,9 @@ o, si preferís npm como atajo:
 npm test
 ```
 
-Validan que los JSON parsean, que el roster y la ausencia de `designer` en los perfiles esperados son coherentes, que el *frontmatter* de cada agente está completo, que los permisos críticos siguen siendo restrictivos, que no hay rastros del perfil/plugin excluido y que la documentación declara la dependencia del selector. También hacen un barrido de secretos y de rutas personales.
+Validan que los JSON parsean, que el roster y la ausencia de `designer` en los perfiles esperados son coherentes, que el *frontmatter* de cada agente está completo, que los permisos críticos siguen siendo restrictivos, que no hay rastros del perfil/plugin excluido y que la documentación declara la dependencia del selector.
+
+Además hacen un **barrido heurístico** de secretos y de datos personales sobre los archivos de texto publicados: buscan formas habituales de credenciales (tokens de GitHub, claves de API, claves privadas, credenciales embebidas), correos y rutas absolutas de usuario. Su alcance es acotado: no inspeccionan binarios, historial de git ni servicios externos, y no detectan un secreto que no coincida con esos patrones. Un resultado limpio es evidencia de que no aparecen esos formatos, no una garantía absoluta.
 
 ## Exclusions explícitas
 
