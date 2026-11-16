@@ -1,0 +1,38 @@
+# Secrets and credentials
+.env
+.env.*
+*.env
+*.env.*
+!*.env.example
+auth.json
+*_auth.json
+credentials.json
+secrets*
+*.pem
+*.key
+*.p12
+*.pfx
+.id_rsa
+id_rsa*
+
+# OpenCode local state / memory / runtime data
+node_modules/
+.opencode/
+memory/
+*.sqlite
+*.sqlite3
+*.db
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+.idea/
+.vscode/
+
+# Local backups produced before activation
+backups/
+*.bak
+*.orig
+*.rej

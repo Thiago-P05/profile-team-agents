@@ -1,0 +1,24 @@
+{
+  "agents": {
+    "orchestrator": {
+      "model": "opencode-go/deepseek-v4.1-flash",
+      "variant": "high"
+    },
+    "explore": {
+      "model": "opencode-go/minimax-m3.1-flash",
+      "variant": "high"
+    },
+    "builder": {
+      "model": "xai/grok-4.7",
+      "variant": "high"
+    },
+    "judge": {
+      "model": "xai/grok-4.7",
+      "variant": "high"
+    },
+    "build": {
+      "model": "openai/gpt-6-luna",
+      "variant": "max"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "agents": {
+    "orchestrator": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "xhigh"
+    },
+    "explore": {
+      "model": "opencode-go/deepseek-v4.1-flash",
+      "variant": "high"
+    },
+    "builder": {
+      "model": "opencode-go/glm-5.3-flash",
+      "variant": "max"
+    },
+    "judge": {
+      "model": "xai/grok-4.7",
+      "variant": "xhigh"
+    },
+    "build": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "max"
+    },
+    "designer": {
+      "model": "opencode-go/kimi-k3.1-pro",
+      "variant": "high"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "agents": {
+    "orchestrator": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "high"
+    },
+    "explore": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "medium"
+    },
+    "builder": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "xhigh"
+    },
+    "judge": {
+      "model": "openai/gpt-6.1-sol",
+      "variant": "low"
+    },
+    "build": {
+      "model": "openai/gpt-6.1-terra",
+      "variant": "max"
+    }
+  }
+}

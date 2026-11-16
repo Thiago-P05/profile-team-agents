@@ -1,0 +1,11 @@
+{
+  "name": "full-chatgipiti-agents",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agent definitions and model profiles for the FULL CHATGIPITI OpenCode flow",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/validate.mjs"
+  },
+  "license": "UNLICENSED"
+}
